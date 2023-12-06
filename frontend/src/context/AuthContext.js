@@ -113,7 +113,7 @@ const loginUser = async (email, password) => {
         setUser(null)
         localStorage.removeItem("authTokens")
         swal.fire({
-            title: "YOu have been logged out...",
+            title: "You have been logged out...",
             icon: "success",
             toast: true,
             timer: 6000,

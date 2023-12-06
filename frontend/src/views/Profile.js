@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import useAxios from "../utils/useAxios";
 import { jwtDecode } from 'jwt-decode';
 import './Profile.css';  // Подключаем файл стилей
 
 function Profile() {
   const [userData, setUserData] = useState(null);
-  const api = useAxios();
   const token = localStorage.getItem("authTokens");
 
   useEffect(() => {

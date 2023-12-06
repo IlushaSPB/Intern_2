@@ -59,7 +59,6 @@ const MusicianSongs = () => {
 
   return (
     <div className="bg-dark text-white min-vh-100 d-flex flex-column align-items-center justify-content-center">
-      <h1 className="text-center mb-4">Musician Songs</h1>
       <label htmlFor="volume" style={{ marginBottom: "10px" }}>
         Громкость
       </label>
@@ -99,6 +98,15 @@ const MusicianSongs = () => {
           </Card>
         ))}
       </div>
+        <img
+          src="https://usagif.com/wp-content/uploads/2020/b72nv6/evrbddancen0w-16.gif"
+          alt="Loading..."
+          style={{
+            position: "static",
+            width: "50%",
+            height: "50%",
+          }}
+        />
       {/* Button to navigate to musician page */}
       <Button onClick={navigateToMusicianPage} style={{ marginTop: "20px" }}>
         Go Back
