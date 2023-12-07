@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Musician, Song, User, Profile
+from .models import Musician, Song, User, Profile, Post
 
 
 class UserAdmin(admin.ModelAdmin):
@@ -15,3 +15,4 @@ admin.site.register(User, UserAdmin)
 admin.site.register(Profile, ProfileAdmin)
 admin.site.register(Musician)
 admin.site.register(Song)
+admin.site.register(Post)

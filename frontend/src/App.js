@@ -12,6 +12,7 @@ import Registerpage from "./views/Registerpage";
 import Loginpage from "./views/Loginpage";
 import Profile from "./views/Profile";
 import Navbar from "./views/Navbar";
+import SearchPage from "./search/SearchPage";
 
 const App = () => (
   <Router>
@@ -25,6 +26,7 @@ const App = () => (
           <Route path="/musician/:id" element={<MusicianSong />} />
           <Route path="/login" element={<Loginpage />} />
           <Route path="/register" element={<Registerpage />} />
+          <Route path="/search" element={<SearchPage />} />
         </Routes>
       </div>
     </AuthProvider>

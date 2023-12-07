@@ -29,7 +29,9 @@ function Navbar() {
               <li className="nav-item">
                 <a className="nav-link active" aria-current="page" href="/musician">Musician List</a>
               </li>
-
+              <li className="nav-item">
+                <a className="nav-link active" aria-current="page" href="/search">Search Music</a>
+              </li>
               {token === null &&
               <>
                 <li class="nav-item">

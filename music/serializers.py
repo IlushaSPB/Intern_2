@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Musician, Song, User
+from .models import Musician, Song, User, Post
 
 from django.contrib.auth.password_validation import validate_password
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
@@ -69,3 +69,9 @@ class SongSerializer(serializers.ModelSerializer):
     class Meta:
         model = Song
         fields = ('id', 'title', 'musician', 'audio', 'cover')
+
+
+class PostSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Post
+        fields = ('id', 'title')

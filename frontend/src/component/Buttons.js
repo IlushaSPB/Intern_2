@@ -1,5 +1,6 @@
 import React from "react";
 
+
 const Buttons = () => (
   <div className="bg-dark text-white min-vh-100 d-flex flex-column align-items-center justify-content-center">
     <h1 className="text-center mb-4">Welcome to the Music App</h1>

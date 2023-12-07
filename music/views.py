@@ -1,6 +1,7 @@
 from rest_framework import viewsets
-from .serializers import MusicianSerializer, SongSerializer, MyTokenObtainPairSerializer, RegisterSerializer
-from .models import Musician, Song, User
+from .serializers import MusicianSerializer, SongSerializer, MyTokenObtainPairSerializer, RegisterSerializer, \
+    PostSerializer
+from .models import Musician, Song, User, Post
 from django.shortcuts import get_object_or_404
 
 # Create your views here.
@@ -34,6 +35,7 @@ def getRoutes(request):
         '/api/token/refresh/',
         'api/musician/',
         'api/song/',
+        'api/post/',
     ]
     return Response(routes)
 
@@ -68,3 +70,30 @@ class SongListByMusician(generics.ListAPIView):
         musician_id = self.kwargs['musician_id']
         musician = get_object_or_404(Musician, pk=musician_id)
         return Song.objects.filter(musician=musician)
+
+
+from rest_framework import generics
+from .models import Post
+from .serializers import PostSerializer
+
+class PostListCreate(generics.ListCreateAPIView):
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer
+
+    def get_queryset(self):
+        qs = Post.objects.all()
+        title = self.request.query_params.get('title')
+        if title is not None:
+            qs = qs.filter(title__icontains=title)
+
+        # Получение параметров offset и limit из запроса
+        offset = self.request.query_params.get('offset')
+        limit = self.request.query_params.get('limit')
+
+        # Применение параметров offset и limit для пагинации
+        if offset is not None and limit is not None:
+            offset = int(offset)
+            limit = int(limit)
+            qs = qs[offset:offset + limit]
+
+        return qs
