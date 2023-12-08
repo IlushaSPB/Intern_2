@@ -1,17 +1,11 @@
 import {useContext} from 'react'
-import { jwtDecode } from "jwt-decode"
 import AuthContext from '../context/AuthContext'
 import { Link } from 'react-router-dom'
 
 function Navbar() {
 
-  const {user, logoutUser} = useContext(AuthContext)
+  const {logoutUser} = useContext(AuthContext)
   const token = localStorage.getItem("authTokens")
-
-  if (token){
-    const decoded = jwtDecode(token)
-    var user_id = decoded.user_id
-  }
 
   return (
     <div>
@@ -33,31 +27,38 @@ function Navbar() {
                 <a className="nav-link active" aria-current="page" href="/search">Search Music</a>
               </li>
               {token === null &&
-              <>
-                <li class="nav-item">
-                  <Link class="nav-link" to="/login">Login</Link>
-                </li>
-                <li class="nav-item">
-                  <Link class="nav-link" to="/register">Register</Link>
-                </li>
-              </>
+                  <>
+                    <li class="nav-item">
+                      <Link class="nav-link" to="/login">Login</Link>
+                    </li>
+                    <li class="nav-item">
+                      <Link class="nav-link" to="/register">Register</Link>
+                    </li>
+
+                  </>
               }
 
-            {token !== null &&
-              <>
-                <li class="nav-item">
-                  <a class="nav-link" href="/profile">Profile</a>
-                </li>
-                <li class="nav-item">
-              <a class="nav-link" onClick={logoutUser} style={{cursor:"pointer"}}>Logout</a>
-                </li>
-              </>
+              {token !== null &&
+                  <>
+                    <li className="nav-item">
+                      <a className="nav-link active" aria-current="page" href="/add_musician">Add Musician</a>
+                    </li>
+                    <li className="nav-item">
+                      <a className="nav-link active" aria-current="page" href="/add_song">Add Song</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="/profile">Profile</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" onClick={logoutUser} style={{cursor: "pointer"}}>Logout</a>
+                    </li>
+                  </>
               }
 
             </ul>
           </div>
         </div>
-      </nav>
+        </nav>
     </div>
   )
 }

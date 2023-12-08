@@ -58,7 +58,9 @@ const MusicianSongs = () => {
   };
 
   return (
-    <div className="bg-dark text-white min-vh-100 d-flex flex-column align-items-center justify-content-center">
+      <div>
+      { songs.length > 0 ?(
+              <div className="bg-dark text-white min-vh-100 d-flex flex-column align-items-center justify-content-center">
       <label htmlFor="volume" style={{ marginBottom: "10px" }}>
         Громкость
       </label>
@@ -112,6 +114,15 @@ const MusicianSongs = () => {
         Go Back
       </Button>
     </div>
+        ) : (
+            <div>
+                    <Button onClick={navigateToMusicianPage} style={{ marginTop: "20px" }}>
+        У данного исполнителя нет песен
+      </Button>
+            </div>
+        )
+      }
+</div>
   );
 };
 

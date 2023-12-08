@@ -5,14 +5,13 @@ from .models import Musician, Song, User, Post
 from django.shortcuts import get_object_or_404
 
 # Create your views here.
-from django.shortcuts import render
-from django.http import JsonResponse
 from rest_framework.response import Response
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework import generics
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes
+from .serializers import PostSerializer
 
 
 class MyTokenObtainPairView(TokenObtainPairView):
@@ -72,9 +71,7 @@ class SongListByMusician(generics.ListAPIView):
         return Song.objects.filter(musician=musician)
 
 
-from rest_framework import generics
-from .models import Post
-from .serializers import PostSerializer
+
 
 class PostListCreate(generics.ListCreateAPIView):
     queryset = Post.objects.all()
