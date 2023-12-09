@@ -54,7 +54,7 @@ const MusicianSongs = () => {
   };
 
   const navigateToMusicianPage = () => {
-    navigate(`/`);
+    navigate(`musician/`);
   };
 
   return (

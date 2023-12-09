@@ -29,10 +29,10 @@ function Navbar() {
               {token === null &&
                   <>
                     <li class="nav-item">
-                      <Link class="nav-link" to="/login">Login</Link>
+                      <Link class="nav-link active" to="/login">Login</Link>
                     </li>
                     <li class="nav-item">
-                      <Link class="nav-link" to="/register">Register</Link>
+                      <Link class="nav-link active" to="/register">Register</Link>
                     </li>
 
                   </>
@@ -47,7 +47,7 @@ function Navbar() {
                       <a className="nav-link active" aria-current="page" href="/add_song">Add Song</a>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link" href="/profile">Profile</a>
+                      <a class="nav-link active" href="/profile">Profile</a>
                     </li>
                     <li class="nav-item">
                       <a class="nav-link" onClick={logoutUser} style={{cursor: "pointer"}}>Logout</a>
