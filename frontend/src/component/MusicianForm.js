@@ -39,7 +39,7 @@ try {
     },
   };
 
-  await axios.post("api/musician/", formDataToSend, config);
+  await axios.post("api/musician/create", formDataToSend, config);
   setIsLoading(false);
   handleClose();
 } catch (error) {
@@ -101,7 +101,11 @@ try {
       </Modal.Body>
     </Modal>
         ) : (
-            <span className="error-message">Извините, мы вас не знаем.</span>
+                <Modal show={showModal} onHide={handleClose}>
+      <Modal.Header closeButton style={{ backgroundColor: '#8B0000', color: 'white' }}>
+        <Modal.Title>Извините, мы вас не знаем.</Modal.Title>
+      </Modal.Header>
+    </Modal>
         )
       }
       </div>

@@ -16,6 +16,7 @@ urlpatterns = [
     path('api/song/', views.SongListCreate.as_view()),
     path('api/song/musician/<int:musician_id>/', SongListByMusician.as_view(), name='song-list-by-musician'),
     path('api/posts/', views.PostListCreate.as_view()),
+    path('api/musician/create', views.MusicianCreate.as_view()),
 ]
 
 if settings.DEBUG:

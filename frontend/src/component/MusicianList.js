@@ -7,6 +7,7 @@ class MusicianList extends Component {
     super(props);
     this.state = {
       musicians: [],
+      nextPage: null, // Добавляем состояние для хранения номера следующей страницы
     };
   }
 
@@ -14,18 +15,33 @@ class MusicianList extends Component {
     this.getMusicians();
   }
 
-  getMusicians = () => {
+  getMusicians = (page = 1) => {
     axios
-      .get("/api/musician/")
+      .get("/api/musician/", {
+        params: {
+          page: page,
+        },
+      })
       .then((response) => {
-        const newMusicians = response.data;
-        this.setState({
-          musicians: newMusicians,
-        });
+        const newMusicians = response.data.results;
+        const nextPage = response.data.next; // Получаем ссылку на следующую страницу
+
+        this.setState((prevState) => ({
+          musicians: [...prevState.musicians, ...newMusicians],
+          nextPage: nextPage,
+        }));
       })
       .catch((error) => {
         console.error("Error fetching musicians: ", error);
       });
+  };
+
+  loadMore = () => {
+    const { nextPage } = this.state;
+    if (nextPage) {
+      const page = new URL(nextPage).searchParams.get("page");
+      this.getMusicians(page);
+    }
   };
 
   render() {
@@ -41,6 +57,7 @@ class MusicianList extends Component {
             </li>
           ))}
         </ul>
+        <button onClick={this.loadMore}>Load More</button>
       </div>
     );
   }

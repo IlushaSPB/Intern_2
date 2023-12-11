@@ -1,4 +1,6 @@
 from rest_framework import viewsets
+from rest_framework.pagination import PageNumberPagination
+
 from .serializers import MusicianSerializer, SongSerializer, MyTokenObtainPairSerializer, RegisterSerializer, \
     PostSerializer
 from .models import Musician, Song, User, Post
@@ -51,10 +53,32 @@ def dashboard(request):
         return Response({'response': data}, status=status.HTTP_200_OK)
     return Response({}, status.HTTP_400_BAD_REQUEST)
 
+class MusicianCreate(generics.ListCreateAPIView):
+    queryset = Musician.objects.all()
+    serializer_class = MusicianSerializer
+
+class CustomPageNumberPagination(PageNumberPagination):
+    page_size = 2
+    page_size_query_param = 'page_size'
+    max_page_size = 100
+
 
 class MusicianListCreate(generics.ListCreateAPIView):
     queryset = Musician.objects.all()
     serializer_class = MusicianSerializer
+    pagination_class = CustomPageNumberPagination
+
+    def list(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(self.get_queryset())
+        page = self.paginate_queryset(queryset)
+
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
+
 
 
 class SongListCreate(generics.ListCreateAPIView):
@@ -80,17 +104,33 @@ class PostListCreate(generics.ListCreateAPIView):
     def get_queryset(self):
         qs = Post.objects.all()
         title = self.request.query_params.get('title')
+        musician = self.request.query_params.get('musician')
+
         if title is not None:
             qs = qs.filter(title__icontains=title)
+        if musician is not None:
+            qs = qs.filter(musician__icontains=musician)
 
-        # Получение параметров offset и limit из запроса
         offset = self.request.query_params.get('offset')
         limit = self.request.query_params.get('limit')
 
-        # Применение параметров offset и limit для пагинации
         if offset is not None and limit is not None:
             offset = int(offset)
             limit = int(limit)
             qs = qs[offset:offset + limit]
 
         return qs
+
+    def list(self, request, *args, **kwargs):
+        queryset = self.get_queryset()
+        serializer = self.get_serializer(queryset, many=True)
+
+        title_count = queryset.count()  # Получаем общее количество записей
+
+        response_data = {
+            'count': title_count,
+            'results': serializer.data,
+        }
+
+        return Response(response_data)
+

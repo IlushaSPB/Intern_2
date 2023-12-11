@@ -136,8 +136,11 @@ const SongForm = ({ showModal, handleClose }) => {
           </Modal.Body>
         </Modal>
       ) : (
-        <span className="error-message">Вы кто такие???? Я вас не звал!!!!</span>
-      )}
+                <Modal show={showModal} onHide={handleClose}>
+      <Modal.Header closeButton style={{ backgroundColor: '#8B0000', color: 'white' }}>
+        <Modal.Title>Извините, мы вас не знаем.</Modal.Title>
+      </Modal.Header>
+    </Modal>      )}
     </div>
   );
 };
